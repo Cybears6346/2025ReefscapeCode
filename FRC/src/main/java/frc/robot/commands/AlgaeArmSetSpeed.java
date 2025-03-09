@@ -14,6 +14,7 @@ public class AlgaeArmSetSpeed extends Command {
   private final AlgaeArm algaeArm;
   private final double speed;
 
+  
   /**
    * Creates a new command named AlgaeArmSetSpeed.
    *
