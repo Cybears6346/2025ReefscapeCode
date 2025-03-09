@@ -38,6 +38,7 @@ public class AlgaeArmSetSpeed extends Command {
     this.algaeArm.setSpeed(0);
   }
 
+  @Override
   public boolean isFinished() {
     return false;
   }
