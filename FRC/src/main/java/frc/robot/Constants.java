@@ -16,7 +16,25 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kOperatorControllerPort = 1;
     public static final int kDriverControllerPort = 0;
+
+    //Drive Constants 
+    public static final int driveMotor1ID = 1;
+    public static final int driveMotor2ID = 2;
+    public static final int driveMotor3ID = 3;
+    public static final int driveMotor4ID = 4; 
+
+    //Elevator Constants
+    public static final int elevatorMotor1ID = 5;
+    public static final int elevatorMotor2ID = 6;
+
+    //Shooter Constants
+    public static final int shooterMotor1ID  = 7;
+    public static final int shooterMotor2ID = 8;
+    
+    //Algae Arm Constants
     public static final int AlgaeArmFlexID = 9;
+
+    //Algae Arm constants
     public static final int AlgaeWheelMaxID = 10;
   }
 
