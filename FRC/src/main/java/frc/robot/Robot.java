@@ -3,7 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-import org.littletonrobotics.URCL;
+import org.littletonrobotics.urcl.URCL;
 
 
 import edu.wpi.first.wpilibj.DataLogManager;
@@ -29,12 +29,13 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-  }
+    }
 
-  @Override
-  public void robotInit() {
+    @Override
+    public void robotInit() {
+    DataLogManager.start();
     URCL.start(DataLogManager.getLog());
-  }
+    }
 
   /**
    * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics

@@ -10,6 +10,7 @@ import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -69,6 +70,33 @@ public class RobotContainer {
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     m_operatorController.a().whileTrue(new AlgaeWheelSetSpeed(algaeWheel, 1));
     m_operatorController.b().whileTrue(new AlgaeWheelSetSpeed(algaeWheel, -1));
+
+    /*
+     * Sys ID routines, to be uploaded to URCL by littleton robotics
+     * Driver controller must hold those button combinations to administer the routine
+     * Please do this in an open area
+     * There are four tests total, read the URCL docs for info on how to access the data. 
+     * Keep these tests here as they will differ from robot to robot year to year
+     */
+    m_driverController
+      .a()
+      .and(m_driverController.rightBumper())
+      .whileTrue(arcadeDrive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+
+    m_driverController
+      .b()
+      .and(m_driverController.rightBumper())
+      .whileTrue(arcadeDrive.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+
+    m_driverController
+      .x()
+      .and(m_driverController.rightBumper())
+      .whileTrue(arcadeDrive.sysIdDynamic(SysIdRoutine.Direction.kForward));
+
+    m_driverController
+      .y()
+      .and(m_driverController.rightBumper())
+      .whileTrue(arcadeDrive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
   }
 
   /**
