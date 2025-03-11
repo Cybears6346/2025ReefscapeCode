@@ -18,13 +18,21 @@ public class Elevator {
     {
         elevatorMotor1 = new SparkMax(OperatorConstants.elevatorMotor1ID, MotorType.kBrushless);
         elevatorMotor2 = new SparkMax(OperatorConstants.elevatorMotor2ID, MotorType.kBrushless);
+        SparkMaxConfig globalElevatorLeaderConfig = new SparkMaxConfig();
+
+        globalElevatorLeaderConfig
+            .smartCurrentLimit(50)
+            .idleMode(IdleMode.kBrake)
+            .inverted(true);
+
+        elevatorMotor1.configure(globalElevatorLeaderConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        elevatorMotor2.configure(globalElevatorLeaderConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         
-        //Leader & follower system is not really necessary for the elevator given the setSpeed method
-        
+
     }
     public void setSpeed(double speed)
     {
-        //Inverse speed to adjust for joystick input
+        //Inverse speed to adjust for joystick input.
         elevatorMotor1.set(-speed);
         elevatorMotor2.set(-speed);
     }
