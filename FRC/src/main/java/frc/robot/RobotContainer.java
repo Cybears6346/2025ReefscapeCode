@@ -71,6 +71,14 @@ public class RobotContainer {
     m_operatorController.a().whileTrue(new AlgaeWheelSetSpeed(algaeWheel, 1));
     m_operatorController.b().whileTrue(new AlgaeWheelSetSpeed(algaeWheel, -1));
 
+    new Trigger(() -> Math.abs(m_operatorController.getRightY()) > 0.05)
+    .whileTrue(new ElevatorSetSpeed(elevator, m_driverController.getLeftY()*speedPercentage));
+
+    new Trigger(() -> m_operatorController.getLeftTriggerAxis() > 0.25 && m_operatorController.getRightTriggerAxis() <= 0.25)
+      .whileTrue(new ShooterSetSpeed(shooter, m_operatorController.getLeftTriggerAxis()));
+
+    new Trigger(() -> m_operatorController.getRightTriggerAxis() > 0.25 && m_operatorController.getLeftTriggerAxis() <= 0.25)
+       .whileTrue(new ShooterSetSpeed(shooter, -m_operatorController.getRightTriggerAxis()));
     /*
      * Sys ID routines, to be uploaded to URCL by littleton robotics
      * Driver controller must hold those button combinations to administer the routine
