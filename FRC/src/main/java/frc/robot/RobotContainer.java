@@ -21,6 +21,8 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final AlgaeArm algaeArm = new AlgaeArm();
   private final AlgaeWheel algaeWheel = new AlgaeWheel();
+  private final Shooter shooter = new Shooter();
+  private final Elevator elevator = new Elevator();
   private final Driving arcadeDrive = new Driving();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
