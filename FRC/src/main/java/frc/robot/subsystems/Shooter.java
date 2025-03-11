@@ -37,8 +37,8 @@ public class Shooter extends SubsystemBase {
     }
     public void setSpeed(double speed)
     {
-        //Inverse speed to adjust for joystick input.
-        shooterMotor1.set(-speed);
-        shooterMotor2.set(-speed);
+    
+        shooterMotor1.set(speed);
+        shooterMotor2.set(speed);
     }
 }
