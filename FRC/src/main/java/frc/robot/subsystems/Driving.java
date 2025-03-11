@@ -77,4 +77,10 @@ public class Driving extends SubsystemBase {
     public void arcadeDrive(double speed, double rotation) {
         differentialDrive.arcadeDrive(speed, rotation);
     }
+
+    @Override
+    public void periodic() {
+        differentialDrive.feed();
+        // This method will be called once per scheduler run
+    }  
 }
