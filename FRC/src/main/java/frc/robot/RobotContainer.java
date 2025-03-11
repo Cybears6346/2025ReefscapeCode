@@ -21,10 +21,14 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final AlgaeArm algaeArm = new AlgaeArm();
   private final AlgaeWheel algaeWheel = new AlgaeWheel();
+  private final Driving arcadeDrive = new Driving();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_operatorController =
       new CommandXboxController(OperatorConstants.kOperatorControllerPort);
+
+  private final CommandXboxController m_driverController =
+      new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -49,6 +53,14 @@ public class RobotContainer {
     */
     new Trigger(() -> Math.abs(m_operatorController.getLeftY())>0.05)
         .whileTrue(new AlgaeArmSetSpeed(algaeArm, -m_operatorController.getLeftY()));
+
+    /**
+     * This should hopefully drive the robot 
+     */
+    double speedPercentage = 0.8;
+    double rotationPercentage = 1;
+        new Trigger(() -> Math.abs(m_driverController.getLeftY()) > 0.05 || Math.abs(m_driverController.getRightX()) > 0.05)
+      .whileTrue(new ArcadeDrive(arcadeDrive, m_driverController.getLeftY()*speedPercentage, m_driverController.getRightX()*rotationPercentage));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
