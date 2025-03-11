@@ -75,8 +75,8 @@ public class RobotContainer {
    * @return the command to run in autonomous
    * TODO: ADD THIS FOR AUTONOMOUS
    */
-  // public Command getAutonomousCommand() {
-  //   // An example command will be run in autonomous
-  //   return Autos.exampleAuto(m_exampleSubsystem);
-  // }
+  public Command getAutonomousCommand() {
+    // An example command will be run in autonomous
+    return Autos.exampleAuto(arcadeDrive,algaeArm);
+  }
 }

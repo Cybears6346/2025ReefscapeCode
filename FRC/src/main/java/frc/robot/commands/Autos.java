@@ -4,15 +4,16 @@
 
 package frc.robot.commands;
 
-// import frc.robot.subsystems.ExampleSubsystem; -- TODO: REPLACE WITH DRIVE SUBSYSTEM
+import frc.robot.subsystems.Driving;
+import frc.robot.subsystems.AlgaeArm;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 
 public final class Autos {
   /** Example static factory for an autonomous command. */
-  // public static Command exampleAuto(ExampleSubsystem subsystem) {
-  //   return Commands.sequence(subsystem.exampleMethodCommand(), new ExampleCommand(subsystem));
-  // } -- TODO: REPLACE WITH DRIVE SUBSYSTEM
+  public static Command exampleAuto(Driving subsystem, AlgaeArm algaeArm) {
+    return Commands.sequence(new ArcadeDrive(subsystem, 0, 0), new AlgaeArmSetSpeed(algaeArm, 0));
+  }// - TODO: REPLACE WITH DRIVE SUBSYSTEM
 
   private Autos() {
     throw new UnsupportedOperationException("This is a utility class!");
