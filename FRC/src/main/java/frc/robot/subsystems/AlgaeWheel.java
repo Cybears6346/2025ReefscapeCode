@@ -11,7 +11,9 @@ import frc.robot.Constants.OperatorConstants;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
-public class AlgaeWheel {
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+public class AlgaeWheel extends SubsystemBase {
     public final SparkMax algaeWheelMotor;
 
     public AlgaeWheel()
@@ -21,11 +23,15 @@ public class AlgaeWheel {
 
         globalAlgaeWheelLeaderConfig
             .smartCurrentLimit(50)
-            .idleMode(IdleMode.kBrake);
+            .idleMode(IdleMode.kBrake)
+            .inverted(true);
 
         algaeWheelMotor.configure(globalAlgaeWheelLeaderConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
+    /**
+   * Set speed method to be called in commands folder
+   */
     public void setSpeed(double speed)
     {
         algaeWheelMotor.set(-speed * 0.5);
