@@ -35,6 +35,7 @@ public class Shooter extends SubsystemBase {
         shooterMotor2.configure(shooterInvertedConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     }
+    
     public void setSpeed(double speed)
     {
     
