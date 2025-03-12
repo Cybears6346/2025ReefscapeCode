@@ -62,14 +62,19 @@ public class RobotContainer {
      */
     double speedPercentage = 0.8;
     double rotationPercentage = 1;
-        new Trigger(() -> Math.abs(m_driverController.getLeftY()) > 0.05 || Math.abs(m_driverController.getRightX()) > 0.05)
-      .whileTrue(new ArcadeDrive(arcadeDrive, m_driverController.getLeftY()*speedPercentage, m_driverController.getRightX()*rotationPercentage));
+      //   new Trigger(() -> Math.abs(m_driverController.getLeftY()) > 0.05 || Math.abs(m_driverController.getRightX()) > 0.05)
+      // .whileTrue(new ArcadeDrive(arcadeDrive, m_driverController.getLeftY()*speedPercentage, m_driverController.getRightX()*rotationPercentage));
+      new Trigger(() -> Math.abs(m_driverController.getLeftY()) > 0.05 || Math.abs(m_driverController.getRightX()) > 0.05)
+        .whileTrue(new ArcadeDrive(arcadeDrive, 
+                       () -> m_driverController.getLeftY() * speedPercentage, 
+                       () -> m_driverController.getRightX() * rotationPercentage));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     m_operatorController.a().whileTrue(new AlgaeWheelSetSpeed(algaeWheel, 1));
     m_operatorController.b().whileTrue(new AlgaeWheelSetSpeed(algaeWheel, -1));
+
 
     new Trigger(() -> Math.abs(m_operatorController.getRightY()) > 0.05)
     .whileTrue(new ElevatorSetSpeed(elevator, m_driverController.getLeftY()*speedPercentage));
@@ -86,25 +91,25 @@ public class RobotContainer {
      * There are four tests total, read the URCL docs for info on how to access the data. 
      * Keep these tests here as they will differ from robot to robot year to year
      */
-    m_driverController
-      .a()
-      .and(m_driverController.rightBumper())
-      .whileTrue(arcadeDrive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+    // m_driverController
+    //   .a()
+    //   .and(m_driverController.rightBumper())
+    //   .whileTrue(arcadeDrive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
 
-    m_driverController
-      .b()
-      .and(m_driverController.rightBumper())
-      .whileTrue(arcadeDrive.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+    // m_driverController
+    //   .b()
+    //   .and(m_driverController.rightBumper())
+    //   .whileTrue(arcadeDrive.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
 
-    m_driverController
-      .x()
-      .and(m_driverController.rightBumper())
-      .whileTrue(arcadeDrive.sysIdDynamic(SysIdRoutine.Direction.kForward));
+    // m_driverController
+    //   .x()
+    //   .and(m_driverController.rightBumper())
+    //   .whileTrue(arcadeDrive.sysIdDynamic(SysIdRoutine.Direction.kForward));
 
-    m_driverController
-      .y()
-      .and(m_driverController.rightBumper())
-      .whileTrue(arcadeDrive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+    // m_driverController
+    //   .y()
+    //   .and(m_driverController.rightBumper())
+    //   .whileTrue(arcadeDrive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
   }
 
   /**

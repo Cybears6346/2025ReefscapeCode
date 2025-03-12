@@ -11,6 +11,8 @@ import com.revrobotics.spark.SparkMax;
 
 import static edu.wpi.first.units.Units.Volts;
 
+import java.util.function.DoubleSupplier;
+
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkRelativeEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;
@@ -41,13 +43,13 @@ public class Driving extends SubsystemBase {
   private final SparkMax rightRearMotor = new SparkMax(OperatorConstants.driveMotor1ID, MotorType.kBrushless);
 
   
-  private final SysIdRoutine sysIdRoutine = new SysIdRoutine(new SysIdRoutine.Config(), new SysIdRoutine.Mechanism(voltage -> {
-    leftFrontMotor.setVoltage(voltage);
-    leftRearMotor.setVoltage(voltage);
-    rightFrontMotor.setVoltage(voltage);
-    rightRearMotor.setVoltage(voltage);
+  // private final SysIdRoutine sysIdRoutine = new SysIdRoutine(new SysIdRoutine.Config(), new SysIdRoutine.Mechanism(voltage -> {
+  //   leftFrontMotor.setVoltage(voltage);
+  //   leftRearMotor.setVoltage(voltage);
+  //   rightFrontMotor.setVoltage(voltage);
+  //   rightRearMotor.setVoltage(voltage);
 
-  }, null,this));  
+  // }, null,this));  
     
   private final DifferentialDrive differentialDrive;
     /** Creates a new Driving subsystem. */
@@ -88,9 +90,14 @@ public class Driving extends SubsystemBase {
   /**
    * Arcade drive method to be called in commands folder
    */
-    public void arcadeDrive(double speed, double rotation) {
-        differentialDrive.arcadeDrive(speed, rotation);
+    public void arcadeDrive(DoubleSupplier speed, DoubleSupplier rotation) {
+        differentialDrive.arcadeDrive(-speed.getAsDouble(), -rotation.getAsDouble());
     }
+
+    public void arcadeDrive(double speed, double rotation) {
+      differentialDrive.arcadeDrive(speed, rotation);
+  }
+
 
     @Override
     public void periodic() {
@@ -98,11 +105,11 @@ public class Driving extends SubsystemBase {
         // This method will be called once per scheduler run
     }  
 
-    public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
-      return sysIdRoutine.quasistatic(direction);
-    }
+    // public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
+    //   return sysIdRoutine.quasistatic(direction);
+    // }
 
-    public Command sysIdDynamic(SysIdRoutine.Direction direction) {
-      return sysIdRoutine.dynamic(direction);
-    }
+    // public Command sysIdDynamic(SysIdRoutine.Direction direction) {
+    //   return sysIdRoutine.dynamic(direction);
+    // }
 }

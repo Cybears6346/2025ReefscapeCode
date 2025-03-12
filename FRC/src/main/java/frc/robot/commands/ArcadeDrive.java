@@ -5,24 +5,35 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.Driving;
+
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that uses an example subsystem. */
 public class ArcadeDrive extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Driving m_drive;
-  private final double speed;
-  private final double rotation;
+  private final DoubleSupplier speed;
+  private final DoubleSupplier rotation;
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public ArcadeDrive(Driving drive, double speed, double rotation) {
+  public ArcadeDrive(Driving drive, DoubleSupplier speed, DoubleSupplier rotation) {
     this.m_drive = drive;
     this.speed = speed;
     this.rotation = rotation;
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(drive);
+  }
+
+  public ArcadeDrive(Driving drive, double speed, double rotation) {
+    this.m_drive = drive;
+    this.speed = () -> speed;
+    this.rotation = () -> rotation;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drive);
   }
@@ -34,7 +45,7 @@ public class ArcadeDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    this.m_drive.arcadeDrive(speed, rotation);
+    this.m_drive.arcadeDrive(this.speed, this.rotation);
   }
 
   // Called once the command ends or is interrupted.
