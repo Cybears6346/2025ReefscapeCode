@@ -3,6 +3,9 @@ package frc.robot.subsystems;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+
+import java.util.function.DoubleSupplier;
+
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
@@ -34,6 +37,11 @@ public class Elevator extends SubsystemBase {
         elevatorMotor2.configure(elevatorInvertedConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     }
+    public void setSpeed(DoubleSupplier speed) {
+        elevatorMotor1.set(-speed.getAsDouble());
+        elevatorMotor2.set(-speed.getAsDouble());
+    }
+    
     public void setSpeed(double speed)
     {
         //Inverse speed to adjust for joystick input.

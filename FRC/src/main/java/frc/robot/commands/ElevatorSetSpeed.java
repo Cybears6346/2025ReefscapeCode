@@ -6,13 +6,16 @@ package frc.robot.commands;
 
 import frc.robot.subsystems.Elevator;
 import edu.wpi.first.wpilibj2.command.Command;
+
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj.XboxController;
 
 /** Sets the speed of the elevator, requires elevator.java subsystem */
 public class ElevatorSetSpeed extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Elevator elevator;
-  private final double speed;
+  private final DoubleSupplier speed;
 
   
   /**
@@ -23,6 +26,13 @@ public class ElevatorSetSpeed extends Command {
    */
   public ElevatorSetSpeed(Elevator elevator, double speed) {
     this.elevator = elevator;
+    this.speed = () -> speed;
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(elevator);
+  }
+
+  public ElevatorSetSpeed(Elevator elevator, DoubleSupplier speed) {
+    this.elevator = elevator;
     this.speed = speed;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(elevator);
@@ -30,7 +40,7 @@ public class ElevatorSetSpeed extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    this.elevator.setSpeed(speed);
+    this.elevator.setSpeed(this.speed);
   }
 
   @Override
