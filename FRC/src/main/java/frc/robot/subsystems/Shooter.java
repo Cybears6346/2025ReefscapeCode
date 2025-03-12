@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import java.util.function.DoubleSupplier;
+
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
@@ -34,6 +36,11 @@ public class Shooter extends SubsystemBase {
         shooterMotor1.configure(globalShooterConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         shooterMotor2.configure(shooterInvertedConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
+    }
+    
+    public void setSpeed(DoubleSupplier speed) {
+        shooterMotor1.set(speed.getAsDouble());
+        shooterMotor2.set(speed.getAsDouble());
     }
     
     public void setSpeed(double speed)
