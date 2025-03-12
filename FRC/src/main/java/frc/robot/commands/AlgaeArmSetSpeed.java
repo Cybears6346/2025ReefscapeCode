@@ -6,13 +6,16 @@ package frc.robot.commands;
 
 import frc.robot.subsystems.AlgaeArm;
 import edu.wpi.first.wpilibj2.command.Command;
+
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj.XboxController;
 
 /** Sets the speed of the algae arm, requires AlgaeArm.java subsystem */
 public class AlgaeArmSetSpeed extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final AlgaeArm algaeArm;
-  private final double speed;
+  private final DoubleSupplier speed;
 
   
   /**
@@ -21,16 +24,23 @@ public class AlgaeArmSetSpeed extends Command {
    * @param algaeArm The subsystem used by this command.
    * @param speed The speed that the motor runs at, range -1 to 1
    */
-  public AlgaeArmSetSpeed(AlgaeArm algaeArm, double speed) {
+  public AlgaeArmSetSpeed(AlgaeArm algaeArm, DoubleSupplier speed) {
     this.algaeArm = algaeArm;
     this.speed = speed;
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(algaeArm);
+  }
+  
+   public AlgaeArmSetSpeed(AlgaeArm algaeArm, double speed) {
+    this.algaeArm = algaeArm;
+    this.speed = () -> speed;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(algaeArm);
   }
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    this.algaeArm.setSpeed(speed);
+    this.algaeArm.setSpeed(this.speed);
   }
 
   @Override

@@ -12,6 +12,8 @@ import com.revrobotics.spark.SparkRelativeEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj.Timer;
 import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -44,7 +46,11 @@ public class AlgaeArm extends SubsystemBase {
   /**
    * Set speed method to be called in commands folder
    */
-  public void setSpeed(double speed) {
+  public void setSpeed(DoubleSupplier speed) {
+    algaeArmMotor.set(-speed.getAsDouble()*0.5);
+  }
+  
+   public void setSpeed(double speed) {
     algaeArmMotor.set(-speed*0.5);
   }
 

@@ -55,7 +55,8 @@ public class RobotContainer {
     * is run at a speed of -operatorcontroller.getLeftY()
     */
     new Trigger(() -> Math.abs(m_operatorController.getLeftY())>0.05)
-        .whileTrue(new AlgaeArmSetSpeed(algaeArm, -m_operatorController.getLeftY()));
+        .whileTrue(new AlgaeArmSetSpeed(algaeArm, 
+        () -> -m_operatorController.getLeftY()));
 
     /**
      * This should hopefully drive the robot 
@@ -77,13 +78,16 @@ public class RobotContainer {
 
 
     new Trigger(() -> Math.abs(m_operatorController.getRightY()) > 0.05)
-    .whileTrue(new ElevatorSetSpeed(elevator, m_driverController.getLeftY()*speedPercentage));
+    .whileTrue(new ElevatorSetSpeed(elevator, 
+    () -> m_driverController.getLeftY()*speedPercentage));
 
     new Trigger(() -> m_operatorController.getLeftTriggerAxis() > 0.25 && m_operatorController.getRightTriggerAxis() <= 0.25)
-      .whileTrue(new ShooterSetSpeed(shooter, m_operatorController.getLeftTriggerAxis()));
+      .whileTrue(new ShooterSetSpeed(shooter, 
+      () -> m_operatorController.getLeftTriggerAxis()));
 
     new Trigger(() -> m_operatorController.getRightTriggerAxis() > 0.25 && m_operatorController.getLeftTriggerAxis() <= 0.25)
-       .whileTrue(new ShooterSetSpeed(shooter, -m_operatorController.getRightTriggerAxis()));
+       .whileTrue(new ShooterSetSpeed(shooter, 
+       () -> -m_operatorController.getRightTriggerAxis()));
     /*
      * Sys ID routines, to be uploaded to URCL by littleton robotics
      * Driver controller must hold those button combinations to administer the routine
