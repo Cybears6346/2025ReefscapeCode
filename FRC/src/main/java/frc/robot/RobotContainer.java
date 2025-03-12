@@ -95,25 +95,25 @@ public class RobotContainer {
      * There are four tests total, read the URCL docs for info on how to access the data. 
      * Keep these tests here as they will differ from robot to robot year to year
      */
-    // m_driverController
-    //   .a()
-    //   .and(m_driverController.rightBumper())
-    //   .whileTrue(arcadeDrive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+    m_driverController
+      .a()
+      .and(m_driverController.rightBumper())
+      .whileTrue(arcadeDrive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
 
-    // m_driverController
-    //   .b()
-    //   .and(m_driverController.rightBumper())
-    //   .whileTrue(arcadeDrive.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+    m_driverController
+      .b()
+      .and(m_driverController.rightBumper())
+      .whileTrue(arcadeDrive.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
 
-    // m_driverController
-    //   .x()
-    //   .and(m_driverController.rightBumper())
-    //   .whileTrue(arcadeDrive.sysIdDynamic(SysIdRoutine.Direction.kForward));
+    m_driverController
+      .x()
+      .and(m_driverController.rightBumper())
+      .whileTrue(arcadeDrive.sysIdDynamic(SysIdRoutine.Direction.kForward));
 
-    // m_driverController
-    //   .y()
-    //   .and(m_driverController.rightBumper())
-    //   .whileTrue(arcadeDrive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+    m_driverController
+      .y()
+      .and(m_driverController.rightBumper())
+      .whileTrue(arcadeDrive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
   }
 
   /**
