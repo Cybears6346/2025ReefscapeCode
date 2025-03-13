@@ -48,4 +48,8 @@ public class Elevator extends SubsystemBase {
         elevatorMotor1.set(-speed);
         elevatorMotor2.set(-speed);
     }
+
+    public void periodic() {
+        // TODO: Add elevator encoder here as in the group chat
+    }
 }
