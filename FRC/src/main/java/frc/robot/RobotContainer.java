@@ -79,7 +79,7 @@ public class RobotContainer {
 
     new Trigger(() -> Math.abs(m_operatorController.getRightY()) > 0.05)
     .whileTrue(new ElevatorSetSpeed(elevator, 
-    () -> m_driverController.getLeftY()*speedPercentage));
+    () -> m_operatorController.getLeftY()*speedPercentage));
 
     new Trigger(() -> m_operatorController.getLeftTriggerAxis() > 0.25 && m_operatorController.getRightTriggerAxis() <= 0.25)
       .whileTrue(new ShooterSetSpeed(shooter, 
