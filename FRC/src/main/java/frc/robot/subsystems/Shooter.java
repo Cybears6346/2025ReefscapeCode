@@ -30,8 +30,7 @@ public class Shooter extends SubsystemBase {
             .idleMode(IdleMode.kBrake);
         shooterInvertedConfig
             .apply(globalShooterConfig)
-            .inverted(true)
-            .follow(shooterMotor1);
+            .inverted(true);
 
         shooterMotor1.configure(globalShooterConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         shooterMotor2.configure(shooterInvertedConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
