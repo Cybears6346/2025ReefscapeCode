@@ -54,4 +54,8 @@ public class AlgaeArm extends SubsystemBase {
     algaeArmMotor.set(-speed*0.5);
   }
 
+  public void periodic() {
+    
+  }
+
 }

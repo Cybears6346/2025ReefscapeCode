@@ -36,4 +36,8 @@ public class AlgaeWheel extends SubsystemBase {
     {
         algaeWheelMotor.set(-speed * 0.5);
     }
+
+    public void periodic() {
+        
+    }
 }
