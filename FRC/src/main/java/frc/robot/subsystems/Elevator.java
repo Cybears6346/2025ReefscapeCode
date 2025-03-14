@@ -29,9 +29,9 @@ public class Elevator extends SubsystemBase {
             .smartCurrentLimit(50)
             .idleMode(IdleMode.kBrake); 
         elevatorInvertedConfig
-            .apply(globalElevatorConfig)
-            .inverted(true)
-            .follow(elevatorMotor1);
+            .smartCurrentLimit(0)
+            .idleMode(IdleMode.kBrake)
+            .inverted(true);
 
         elevatorMotor1.configure(globalElevatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         elevatorMotor2.configure(elevatorInvertedConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -51,5 +51,6 @@ public class Elevator extends SubsystemBase {
 
     public void periodic() {
         // TODO: Add elevator encoder here as in the group chat
+        
     }
 }
