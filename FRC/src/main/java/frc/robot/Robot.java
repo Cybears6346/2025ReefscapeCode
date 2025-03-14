@@ -5,6 +5,7 @@
 package frc.robot;
 import org.littletonrobotics.urcl.URCL;
 
+import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -64,6 +65,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     // m_autonomousCommand = m_robotContainer.getAutonomousCommand(); FIXME: Fix when auton is finished
+    Command autoCommand = AutoBuilder.buildAuto("New Auto");
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -73,7 +75,9 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    
+  }
 
   @Override
   public void teleopInit() {
