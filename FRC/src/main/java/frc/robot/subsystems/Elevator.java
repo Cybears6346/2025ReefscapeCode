@@ -14,9 +14,17 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import frc.robot.Constants.OperatorConstants;
 
+import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.spark.SparkAbsoluteEncoder;
+
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
+
 public class Elevator extends SubsystemBase {
     public final SparkMax elevatorMotor1;
     public final SparkMax elevatorMotor2;
+    DigitalInput elevatorInput = new DigitalInput(9);
+    DutyCycleEncoder elevatorAbsoluteEncoder = new DutyCycleEncoder(elevatorInput);
 
     public Elevator()
     {
@@ -36,7 +44,12 @@ public class Elevator extends SubsystemBase {
         elevatorMotor1.configure(globalElevatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         elevatorMotor2.configure(elevatorInvertedConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
+        
     }
+    public double getElevatorEncoderValue(){
+        return elevatorAbsoluteEncoder.get();
+    }
+    
     public void setSpeed(DoubleSupplier speed) {
         elevatorMotor1.set(-speed.getAsDouble());
         elevatorMotor2.set(-speed.getAsDouble());
@@ -51,6 +64,6 @@ public class Elevator extends SubsystemBase {
 
     public void periodic() {
         // TODO: Add elevator encoder here as in the group chat
-        
+
     }
 }
