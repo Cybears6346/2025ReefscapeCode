@@ -48,7 +48,12 @@ public class Driving extends SubsystemBase {
       .analogPositionAlwaysOn(true)
       .analogVelocityAlwaysOn(true)
       .analogVoltageAlwaysOn(true)
-      .absoluteEncoderPositionAlwaysOn(true);
+      .absoluteEncoderPositionAlwaysOn(true)
+      .absoluteEncoderVelocityAlwaysOn(true)
+      .primaryEncoderPositionAlwaysOn(true)
+      .primaryEncoderVelocityAlwaysOn(true)
+      .externalOrAltEncoderPositionAlwaysOn(true)
+      .externalOrAltEncoderVelocityAlwaysOn(true);
     
 
     SparkMaxConfig globalLeaderConfig = new SparkMaxConfig();

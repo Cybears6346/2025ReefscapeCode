@@ -11,6 +11,9 @@ import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import java.util.Map;
+import java.util.HashMap;
+import frc.robot.Constants.OperatorConstants;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -19,6 +22,13 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+
+  private final Map<Integer, String> canIdMap = new HashMap<>() {{
+    put(OperatorConstants.driveMotor4ID, "leftFrontMotor");
+    put(OperatorConstants.driveMotor3ID, "leftRearMotor");
+    put(OperatorConstants.driveMotor2ID, "rightFrontMotor");
+    put(OperatorConstants.driveMotor1ID, "rightRearMotor");
+  }};
 
   private final RobotContainer m_robotContainer;
 
@@ -35,7 +45,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
     DataLogManager.start();
-    URCL.start(DataLogManager.getLog());
+    URCL.start(canIdMap);
     }
 
   /**
