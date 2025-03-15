@@ -75,7 +75,7 @@ public class RobotContainer {
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     m_operatorController.a().whileTrue(new AlgaeWheelSetSpeed(algaeWheel, 1));
     m_operatorController.b().whileTrue(new AlgaeWheelSetSpeed(algaeWheel, -1));
-
+    
 
     new Trigger(() -> Math.abs(m_operatorController.getRightY()) > 0.05)
     .whileTrue(new ElevatorSetSpeed(elevator, 
