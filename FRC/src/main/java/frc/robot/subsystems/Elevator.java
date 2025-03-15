@@ -25,6 +25,7 @@ public class Elevator extends SubsystemBase {
     public final SparkMax elevatorMotor2;
     DigitalInput elevatorInput = new DigitalInput(9);
     DutyCycleEncoder elevatorAbsoluteEncoder = new DutyCycleEncoder(elevatorInput);
+    double encoderValue; 
 
     public Elevator()
     {
@@ -46,9 +47,6 @@ public class Elevator extends SubsystemBase {
 
         
     }
-    public double getElevatorEncoderValue(){
-        return elevatorAbsoluteEncoder.get();
-    }
     
     public void setSpeed(DoubleSupplier speed) {
         elevatorMotor1.set(-speed.getAsDouble());
@@ -62,8 +60,11 @@ public class Elevator extends SubsystemBase {
         elevatorMotor2.set(-speed);
     }
 
+    public double getElevatorEncoderValue(){
+        return elevatorAbsoluteEncoder.get();
+    }
     public void periodic() {
         // TODO: Add elevator encoder here as in the group chat
-
+        encoderValue = getElevatorEncoderValue();
     }
 }
