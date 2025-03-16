@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import java.util.Map;
 import java.util.HashMap;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.subsystems.Camera;
+
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -21,6 +23,7 @@ import frc.robot.Constants.OperatorConstants;
  * this project, you must also update the Main.java file in the project.
  */
 public class Robot extends TimedRobot {
+  private final Camera camera = new Camera();
   private Command m_autonomousCommand;
 
   private final Map<Integer, String> canIdMap = new HashMap<>() {{
@@ -44,6 +47,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
+    camera.Initial();
     DataLogManager.start();
     URCL.start(canIdMap);
     }
