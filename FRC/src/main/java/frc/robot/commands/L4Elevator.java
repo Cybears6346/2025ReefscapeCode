@@ -17,19 +17,19 @@ import edu.wpi.first.wpilibj.XboxController;
 public class L4Elevator extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Elevator elevator;
-  private final DoubleSupplier speed;
 
   /**
    * Creates a new command named ElevatorSetSpeed.
    *
    * @param elevator The subsystem used by this command.
-   * @param speed The speed that the motor runs at, range -1 to 1
-   */
-    public L4Elevator(Elevator elevator, DoubleSupplier speed) {
+   * 
+   **/
+    public L4Elevator(Elevator elevator) {
         this.elevator = elevator;
-        this.speed = speed;
         addRequirements(elevator);
     }
+
+  
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {

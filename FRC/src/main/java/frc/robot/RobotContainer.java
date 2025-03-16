@@ -88,6 +88,8 @@ public class RobotContainer {
     new Trigger(() -> m_operatorController.getRightTriggerAxis() > 0.25 && m_operatorController.getLeftTriggerAxis() <= 0.25)
        .whileTrue(new ShooterSetSpeed(shooter, 
        () -> -m_operatorController.getRightTriggerAxis()));
+
+    m_operatorController.x().onTrue(new L4Elevator(elevator));
     /*
      * Sys ID routines, to be uploaded to URCL by littleton robotics
      * Driver controller must hold those button combinations to administer the routine
