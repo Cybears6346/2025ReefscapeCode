@@ -2,15 +2,32 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+//https://www.youtube.com/watch?v=gRbBkdinq0o Tutorial for pathplanner
+
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.util.sendable.SendableRegistry;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -26,6 +43,9 @@ public class RobotContainer {
   private final Elevator elevator = new Elevator();
   private final Driving arcadeDrive = new Driving();
 
+  SendableChooser<Command> chooser = new SendableChooser<>();
+  
+
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_operatorController =
       new CommandXboxController(OperatorConstants.kOperatorControllerPort);
@@ -37,6 +57,26 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+
+    chooser.addOption("L4 pt.1.path",loadPathplanner("E:\\Github Repos\\Hartford-Comp-Code-2025-1\\FRC\\src\\main\\deploy\\pathplanner\\paths\\L4 pt.1.path", true)); // change file path to match current pc it's running on
+    chooser.addOption("L4 pt.2.path",loadPathplanner("E:\\Github Repos\\Hartford-Comp-Code-2025-1\\FRC\\src\\main\\deploy\\pathplanner\\paths\\L4 pt.2.path", true));// change file path to match current pc it's running on
+    chooser.addOption("L4 pt.3.path",loadPathplanner("E:\\Github Repos\\Hartford-Comp-Code-2025-1\\FRC\\src\\main\\deploy\\pathplanner\\paths\\L4 pt.3.path", true));// change file path to match current pc it's running on
+   
+    Shuffleboard.getTab("Autonomous").add(chooser);
+
+  }
+  
+  public Command loadPathplanner(String filename, boolean resetOdomtry){
+    Path path = Filesystem.getDeployDirectory().toPath().resolve(filename);
+    // try {
+    //   Path path = Filesystem.getDeployDirectory().toPath().resolve(filename);
+
+    // }catch(IOException exception){
+    //   DriverStation.reportError("Unable to open path+" + filename, exception.getStackTrace());
+    //   System.out.println("Unable to read from file" + filename);
+    //   return new InstantCommand();
+    // }
+    return new InstantCommand();
   }
 
   /**
@@ -90,6 +130,10 @@ public class RobotContainer {
        () -> -m_operatorController.getRightTriggerAxis()));
 
     m_operatorController.x().onTrue(new L4Elevator(elevator));
+
+//Dont test this untill Normal L4 Elevator works
+    //m_operatorController.y().onTrue(new L4ElevatorDown(elevator));
+
     /*
      * Sys ID routines, to be uploaded to URCL by littleton robotics
      * Driver controller must hold those button combinations to administer the routine
@@ -126,6 +170,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(arcadeDrive,algaeArm);
+   // return Autos.exampleAuto(arcadeDrive,algaeArm);
+    return chooser.getSelected();
   }
 }
