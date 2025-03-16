@@ -130,7 +130,7 @@ public class RobotContainer {
        () -> -m_operatorController.getRightTriggerAxis()));
 
 //Elevator Macro Bindings for Auto/Teleop
-    m_operatorController.y().onTrue(new L4ElevatorUp(elevator));
+    m_operatorController.y().onTrue(new L4ElevatorShoot(elevator, shooter));
     m_operatorController.x().onTrue(new L3ElevatorUp(elevator));
 
 //Use this as a elevator DOWN test
