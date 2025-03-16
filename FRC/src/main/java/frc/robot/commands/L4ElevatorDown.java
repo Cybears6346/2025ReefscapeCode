@@ -41,7 +41,7 @@ public class L4ElevatorDown extends Command{
     previousEncoderValue = currentEncoderValue;
     double totalRevolutions = revolutionCounter + currentEncoderValue;
     if (totalRevolutions > 0.42) { // Adjust this value if needed.
-      elevator.setSpeed(0.4); // Adjust this for the speed
+      elevator.setSpeed(1); // Adjust this for the speed
     } else {
       elevator.setSpeed(0);
       isFinished = true;

@@ -131,7 +131,7 @@ public class RobotContainer {
 
 //Elevator Macro Bindings for Auto/Teleop
     m_operatorController.y().onTrue(new L4ElevatorShoot(elevator, shooter));
-    m_operatorController.x().onTrue(new L3ElevatorUp(elevator));
+    m_operatorController.x().onTrue(new L3ElevatorShoot(elevator, shooter));
 
 //Use this as a elevator DOWN test
     m_operatorController.a().onTrue(new L4ElevatorDown(elevator));
