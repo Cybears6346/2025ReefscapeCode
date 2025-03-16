@@ -14,7 +14,12 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
+
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -58,26 +63,32 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
 
-    chooser.addOption("L4 pt.1.path",loadPathplanner("E:\\Github Repos\\Hartford-Comp-Code-2025-1\\FRC\\src\\main\\deploy\\pathplanner\\paths\\L4 pt.1.path", true)); // change file path to match current pc it's running on
-    chooser.addOption("L4 pt.2.path",loadPathplanner("E:\\Github Repos\\Hartford-Comp-Code-2025-1\\FRC\\src\\main\\deploy\\pathplanner\\paths\\L4 pt.2.path", true));// change file path to match current pc it's running on
-    chooser.addOption("L4 pt.3.path",loadPathplanner("E:\\Github Repos\\Hartford-Comp-Code-2025-1\\FRC\\src\\main\\deploy\\pathplanner\\paths\\L4 pt.3.path", true));// change file path to match current pc it's running on
+    //chooser.addOption("L4 pt.1.path",loadPathplanner("src/main/deploy/pathplanner/paths/L4 pt.1.path", true)); // change file path to match current pc it's running on
+//chooser.addOption("L4 pt.2.path",loadPathplanner("src/main/deploy/pathplanner/paths/L4 pt.2.path", true));// change file path to match current pc it's running on
+    //chooser.addOption("L4 pt.3.path",loadPathplanner("src/main/deploy/pathplanner/paths/L4 pt.3.path", true));// change file path to match current pc it's running on
    
     Shuffleboard.getTab("Autonomous").add(chooser);
 
   }
   
-  public Command loadPathplanner(String filename, boolean resetOdomtry){
-    Path path = Filesystem.getDeployDirectory().toPath().resolve(filename);
-    // try {
-    //   Path path = Filesystem.getDeployDirectory().toPath().resolve(filename);
+//   public Command loadPathplanner(String filename, boolean resetOdomtry) {
+//     Path path = Filesystem.getDeployDirectory().toPath().resolve(filename);
+//     System.out.println("Path to file: " + path.toString());
 
-    // }catch(IOException exception){
-    //   DriverStation.reportError("Unable to open path+" + filename, exception.getStackTrace());
-    //   System.out.println("Unable to read from file" + filename);
-    //   return new InstantCommand();
-    // }
-    return new InstantCommand();
-  }
+//     try {
+//         if (!Files.exists(path)) {
+//             DriverStation.reportError("Path file not found: " + filename, false);
+//             return new InstantCommand();
+//         }
+
+//         // Example PathPlanner loading logic (update as per your project)
+//         PathPlannerTrajectory trajectory = PathPlanner.loadPath(filename, new PathConstraints(2.0, 2.0)); // Customize your constraints here
+//         return new FollowPathPlannerTrajectoryCommand(trajectory);
+//     } catch (IOException e) {
+//         DriverStation.reportError("Unable to open path: " + filename, e.getStackTrace());
+//         return new InstantCommand();
+//     }
+// }
 
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the
@@ -132,6 +143,7 @@ public class RobotContainer {
 //Elevator Macro Bindings for Auto/Teleop
     m_operatorController.y().onTrue(new L4ElevatorShoot(elevator, shooter));
     m_operatorController.x().onTrue(new L3ElevatorShoot(elevator, shooter));
+    m_operatorController.b().onTrue(new L2ElevatorShoot(elevator, shooter));
 
 //Use this as a elevator DOWN test
     m_operatorController.a().onTrue(new L4ElevatorDown(elevator));
