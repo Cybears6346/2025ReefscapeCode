@@ -113,8 +113,8 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-    m_operatorController.a().whileTrue(new AlgaeWheelSetSpeed(algaeWheel, 1));
-    m_operatorController.b().whileTrue(new AlgaeWheelSetSpeed(algaeWheel, -1));
+    m_operatorController.leftBumper().whileTrue(new AlgaeWheelSetSpeed(algaeWheel, 1));
+    m_operatorController.rightBumper().whileTrue(new AlgaeWheelSetSpeed(algaeWheel, -1));
     
 
     new Trigger(() -> Math.abs(m_operatorController.getRightY()) > 0.05)
@@ -129,10 +129,10 @@ public class RobotContainer {
        .whileTrue(new ShooterSetSpeed(shooter, 
        () -> -m_operatorController.getRightTriggerAxis()));
 
-    m_operatorController.x().onTrue(new L4Elevator(elevator));
+    m_operatorController.x().onTrue(new L4ElevatorUp(elevator));
 
-//Dont test this untill Normal L4 Elevator works
-    //m_operatorController.y().onTrue(new L4ElevatorDown(elevator));
+//Use this as a elevator DOWN test
+    m_operatorController.y().onTrue(new L4ElevatorDown(elevator));
 
     /*
      * Sys ID routines, to be uploaded to URCL by littleton robotics

@@ -4,30 +4,21 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.Elevator;
 import edu.wpi.first.wpilibj2.command.Command;
-
-import static edu.wpi.first.units.Units.Newton;
-
-import java.util.function.DoubleSupplier;
-
-import edu.wpi.first.wpilibj.XboxController;
-
-
-
+import frc.robot.subsystems.Elevator;
 
 /** Sets the speed of the elevator, requires elevator.java subsystem */
-public class L4Elevator extends Command {
+public class L4ElevatorUp extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Elevator elevator;
-
+  private boolean isFinished = false;
   /**
    * Creates a new command named ElevatorSetSpeed.
    *
    * @param elevator The subsystem used by this command.
    * 
    **/
-    public L4Elevator(Elevator elevator) {
+    public L4ElevatorUp(Elevator elevator) {
         this.elevator = elevator;
         addRequirements(elevator);
     }
@@ -38,38 +29,33 @@ public class L4Elevator extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
-    // if (elevator.getElevatorEncoderValue() < 0.9 ){
-    //     elevator.setSpeed(-0.5);
-    //     }
-    //     else {
-    //     elevator.setSpeed(0);
-    // }
 
     // Incremet up to 3.5 revolutions
     double currentEncoderValue = elevator.getElevatorEncoderValue();
-    if (currentEncoderValue < previousEncoderValue) {
+  
+    if (previousEncoderValue > 0.9 && currentEncoderValue < 0.1) {
       revolutionCounter++;
     }
-    // if (previousEncoderValue > 0.9 && currentEncoderValue < 0.1) {
-    //   revolutionCounter++;
-    // }
     previousEncoderValue = currentEncoderValue;
     double totalRevolutions = revolutionCounter + currentEncoderValue;
-    if (totalRevolutions < 3.5) {
-        elevator.setSpeed(-0.5);
+    if (totalRevolutions < 4.3) { //Adjust this value if needed.
+        elevator.setSpeed(-0.8); //Adjust this for the speed
     } else {
         elevator.setSpeed(0);
+        isFinished = true;
     }
   }
 
   @Override
   public void end(boolean interrupted) {
-    this.elevator.setSpeed(0);
+    this.elevator.setSpeed(-0.02); //Helps to counteract gravity pulling the elevator down 
+    previousEncoderValue = 0;
+    revolutionCounter = 0;
+    isFinished = false;
   }
 
   @Override
   public boolean isFinished() {
-    return false;
+    return isFinished;
   }
 }
