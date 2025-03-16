@@ -13,7 +13,13 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "L4ElevatorShoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "L4ElevatorDown"
           }
         },
         {
@@ -29,12 +35,6 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "Intake"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "L4 pt.3"
@@ -43,7 +43,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "Intake"
           }
         }
       ]
