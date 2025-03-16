@@ -15,15 +15,45 @@ import com.revrobotics.config.BaseConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants.OperatorConstants;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPLTVController;
+
+
 
 
 public class Driving extends SubsystemBase {
+
+  // Method to drive the robot given robot-relative ChassisSpeeds
+  public void driveRobotRelative(ChassisSpeeds speeds) {
+    // Implement the logic to drive the robot using the given speeds
+  }
+
+  // Method to get the robot's relative speeds
+  public ChassisSpeeds getRobotRelativeSpeeds() {
+    // Return the current robot-relative speeds
+    return new ChassisSpeeds();
+  }
+
+  // Method to get the robot's pose
+  public Pose2d getPose() {
+    // Return the current pose of the robot
+    return new Pose2d();
+  }
+
+  // Method to reset the robot's pose
+  public void resetPose(Pose2d pose) {
+    // Reset the robot's pose to the given pose
+  }
   private final SparkMax leftFrontMotor = new SparkMax(OperatorConstants.driveMotor4ID, MotorType.kBrushless);
   private final SparkMax leftRearMotor = new SparkMax(OperatorConstants.driveMotor3ID, MotorType.kBrushless);
   private final SparkMax rightFrontMotor = new SparkMax(OperatorConstants.driveMotor2ID, MotorType.kBrushless);
@@ -43,6 +73,34 @@ public class Driving extends SubsystemBase {
     /** Creates a new Driving subsystem. */
   public Driving() {
     SignalsConfig config1 = new SignalsConfig();
+    RobotConfig config = null;
+    try{
+      config = RobotConfig.fromGUISettings();
+    } catch (Exception e) {
+      // Handle exception as needed
+      e.printStackTrace();
+    }
+AutoBuilder.configure(
+            this::getPose, // Robot pose supplier
+            this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
+            this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+            (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
+            new PPLTVController(0.02), // PPLTVController is the built in path following controller for differential drive trains
+            config, // The robot configuration
+            () -> {
+              // Boolean supplier that controls when the path will be mirrored for the red alliance
+              // This will flip the path being followed to the red side of the field.
+              // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+              var alliance = DriverStation.getAlliance();
+              if (alliance.isPresent()) {
+                return alliance.get() == DriverStation.Alliance.Red;
+              }
+              return false;
+            },
+            this // Reference to this subsystem to set requirements
+    );
+
     
     config1
       .analogPositionAlwaysOn(true)

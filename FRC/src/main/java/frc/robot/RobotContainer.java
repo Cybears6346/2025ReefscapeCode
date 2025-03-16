@@ -32,6 +32,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.events.EventTrigger;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.Waypoint;
+
+
+
+
 
 
 /**
@@ -63,12 +75,16 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
 
-    //chooser.addOption("L4 pt.1.path",loadPathplanner("src/main/deploy/pathplanner/paths/L4 pt.1.path", true)); // change file path to match current pc it's running on
-//chooser.addOption("L4 pt.2.path",loadPathplanner("src/main/deploy/pathplanner/paths/L4 pt.2.path", true));// change file path to match current pc it's running on
-    //chooser.addOption("L4 pt.3.path",loadPathplanner("src/main/deploy/pathplanner/paths/L4 pt.3.path", true));// change file path to match current pc it's running on
-   
-    Shuffleboard.getTab("Autonomous").add(chooser);
+    // chooser.addOption("L4 pt.1.path",loadPathplanner("src/main/deploy/pathplanner/paths/L4 pt.1.path", true)); // change file path to match current pc it's running on
+    // chooser.addOption("L4 pt.2.path",loadPathplanner("src/main/deploy/pathplanner/paths/L4 pt.2.path", true));// change file path to match current pc it's running on
+    // chooser.addOption("L4 pt.3.path",loadPathplanner("src/main/deploy/pathplanner/paths/L4 pt.3.path", true));// change file path to match current pc it's running on
+    
+    NamedCommands.registerCommand("L4ElevatorShoot", new L4ElevatorShoot(elevator, shooter));
+    NamedCommands.registerCommand("L4ElevatorDown", new L4ElevatorDown(elevator));
+    NamedCommands.registerCommand("Intake", new Intake(shooter));
+  
 
+    Shuffleboard.getTab("Autonomous").add(chooser);
   }
   
 //   public Command loadPathplanner(String filename, boolean resetOdomtry) {
@@ -141,7 +157,7 @@ public class RobotContainer {
        () -> -m_operatorController.getRightTriggerAxis()));
 
 //Elevator Macro Bindings for Auto/Teleop
-    m_operatorController.y().onTrue(new L4ElevatorShoot(elevator, shooter));
+    m_operatorController.y().onTrue(new PathPlannerAuto("New Auto"));
     m_operatorController.x().onTrue(new L3ElevatorShoot(elevator, shooter));
     m_operatorController.b().onTrue(new L2ElevatorShoot(elevator, shooter));
 
@@ -182,9 +198,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    * TODO: ADD THIS FOR AUTONOMOUS
    */
-  public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-   // return Autos.exampleAuto(arcadeDrive,algaeArm);
-    return chooser.getSelected();
+  public Command getAutonomousCommand(){
+    return new PathPlannerAuto("New Auto");
   }
 }
