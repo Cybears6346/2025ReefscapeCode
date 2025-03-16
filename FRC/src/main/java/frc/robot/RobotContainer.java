@@ -146,7 +146,7 @@ public class RobotContainer {
     m_operatorController.b().onTrue(new L2ElevatorShoot(elevator, shooter));
 
 //Use this as a elevator DOWN test
-    m_operatorController.a().onTrue(new L4ElevatorDown(elevator));
+    m_operatorController.a().onTrue(new Intake(shooter));
 
     /*
      * Sys ID routines, to be uploaded to URCL by littleton robotics
