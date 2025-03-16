@@ -129,10 +129,12 @@ public class RobotContainer {
        .whileTrue(new ShooterSetSpeed(shooter, 
        () -> -m_operatorController.getRightTriggerAxis()));
 
-    m_operatorController.x().onTrue(new L4ElevatorUp(elevator));
+//Elevator Macro Bindings for Auto/Teleop
+    m_operatorController.y().onTrue(new L4ElevatorUp(elevator));
+    m_operatorController.x().onTrue(new L3ElevatorUp(elevator));
 
 //Use this as a elevator DOWN test
-    m_operatorController.y().onTrue(new L4ElevatorDown(elevator));
+    m_operatorController.a().onTrue(new L4ElevatorDown(elevator));
 
     /*
      * Sys ID routines, to be uploaded to URCL by littleton robotics

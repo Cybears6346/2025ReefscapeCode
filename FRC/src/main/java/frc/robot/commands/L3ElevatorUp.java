@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Elevator;
 
 /** Sets the speed of the elevator, requires elevator.java subsystem */
-public class L4ElevatorUp extends Command {
+public class L3ElevatorUp extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Elevator elevator;
   private boolean isFinished = false;
@@ -18,7 +18,7 @@ public class L4ElevatorUp extends Command {
    * @param elevator The subsystem used by this command.
    * 
    **/
-    public L4ElevatorUp(Elevator elevator) {
+    public L3ElevatorUp(Elevator elevator) {
         this.elevator = elevator;
         addRequirements(elevator);
     }
@@ -38,7 +38,7 @@ public class L4ElevatorUp extends Command {
     }
     previousEncoderValue = currentEncoderValue;
     double totalRevolutions = revolutionCounter + currentEncoderValue;
-    if (totalRevolutions < 4.6) { //Adjust this value if needed.
+    if (totalRevolutions < 2.1) { //Adjust this value if needed.
         elevator.setSpeed(-0.8); //Adjust this for the speed
     } else {
         elevator.setSpeed(0);
