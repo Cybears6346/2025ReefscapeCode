@@ -4,6 +4,17 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.units.Measure;
+import edu.wpi.first.units.MutableMeasure;
+import static edu.wpi.first.units.Units.*;
+import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.units.measure.Voltage;
+import edu.wpi.first.units.measure.Velocity;
+
+import edu.wpi.first.units.measure.MutDistance;
+import edu.wpi.first.units.measure.MutVoltage;
+import edu.wpi.first.units.measure.MutLinearVelocity;
+
 import java.util.function.DoubleSupplier;
 
 import com.revrobotics.spark.SparkBase.PersistMode;
@@ -11,6 +22,7 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SignalsConfig;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.config.BaseConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
@@ -58,16 +70,35 @@ public class Driving extends SubsystemBase {
   private final SparkMax leftRearMotor = new SparkMax(OperatorConstants.driveMotor3ID, MotorType.kBrushless);
   private final SparkMax rightFrontMotor = new SparkMax(OperatorConstants.driveMotor2ID, MotorType.kBrushless);
   private final SparkMax rightRearMotor = new SparkMax(OperatorConstants.driveMotor1ID, MotorType.kBrushless);
+  
+  private final MutVoltage m_appliedVoltage = Volts.mutable(0);
+  private final MutDistance m_distance = Meters.mutable(0);
+  private final MutLinearVelocity m_velocity = MetersPerSecond.mutable(0);
 
+  private final RelativeEncoder m_leftFrontEncoder = leftFrontMotor.getEncoder();
+  private final RelativeEncoder m_rightFrontEncoder = rightFrontMotor.getEncoder();
 
+  private final SysIdRoutine sysIdRoutine = new SysIdRoutine(new SysIdRoutine.Config(), new SysIdRoutine.Mechanism((Measure<Voltage> volts) -> {
+    leftFrontMotor.setVoltage(volts.in(Volts));
+    rightFrontMotor.setVoltage(volts.in(Volts));
 
-  private final SysIdRoutine sysIdRoutine = new SysIdRoutine(new SysIdRoutine.Config(), new SysIdRoutine.Mechanism(voltage -> {
-    leftFrontMotor.setVoltage(voltage);
-    leftRearMotor.setVoltage(voltage);
-    rightFrontMotor.setVoltage(voltage);
-    rightRearMotor.setVoltage(voltage);
+  }, log -> {
+    log.motor("drive-left")
+      .voltage(
+          m_appliedVoltage.mut_replace(
+            leftFrontMotor.getAppliedOutput()*leftFrontMotor.getBusVoltage(),Volts))
+      .linearPosition(m_distance.mut_replace(m_leftFrontEncoder.getPosition()*OperatorConstants.kWheelDiameterMeters*Math.PI*OperatorConstants.kDriveMotorGearRatio,Meters))
+      .linearVelocity(
+        m_velocity.mut_replace(m_leftFrontEncoder.getVelocity()*OperatorConstants.kWheelDiameterMeters*Math.PI*OperatorConstants.kDriveMotorGearRatio/60,MetersPerSecond));
+    log.motor("drive-right")
+      .voltage(
+          m_appliedVoltage.mut_replace(
+            rightFrontMotor.getAppliedOutput()*rightFrontMotor.getBusVoltage(),Volts))
+      .linearPosition(m_distance.mut_replace(m_rightFrontEncoder.getPosition()*OperatorConstants.kWheelDiameterMeters*Math.PI*OperatorConstants.kDriveMotorGearRatio,Meters))
+      .linearVelocity(
+        m_velocity.mut_replace(m_rightFrontEncoder.getVelocity()*OperatorConstants.kWheelDiameterMeters*Math.PI*OperatorConstants.kDriveMotorGearRatio/60,MetersPerSecond));
 
-  }, null,this));  
+  },this));  
     
   private final DifferentialDrive differentialDrive;
     /** Creates a new Driving subsystem. */
