@@ -36,6 +36,10 @@ public final class Constants {
 
     //Algae Arm constants
     public static final int AlgaeWheelMaxID = 10;
+
+    public static final double kWheelDiameterMeters = 0.1;
+    public static final int kDriveMotorGearRatio = 1;
+    // TODO: Update these values to match the bot
   }
 
 }
