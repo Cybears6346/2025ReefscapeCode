@@ -62,6 +62,7 @@ public class Driving extends SubsystemBase {
   private final SparkMax rightRearMotor = new SparkMax(OperatorConstants.driveMotor1ID, MotorType.kBrushless);
 
   RelativeEncoder driveEncoder = leftFrontMotor.getEncoder();
+  
 
   private final SysIdRoutine sysIdRoutine = new SysIdRoutine(new SysIdRoutine.Config(), new SysIdRoutine.Mechanism(voltage -> {
     leftFrontMotor.setVoltage(voltage);
@@ -103,7 +104,7 @@ AutoBuilder.configure(
             this // Reference to this subsystem to set requirements
     );
 
-    
+    driveEncoder.setPosition(0);
     config1
       .analogPositionAlwaysOn(true)
       .analogVelocityAlwaysOn(true)

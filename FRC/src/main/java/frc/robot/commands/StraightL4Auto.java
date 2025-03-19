@@ -35,17 +35,31 @@ public class StraightL4Auto extends Command {
     }
 
 
+double encoder;
+double encoderCounter;
+
+  @Override
+  public void initialize() {
+    encoder = 0;
+    encoderCounter = 0;
+  }
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    encoderCounter = 0;
     double encoder = driving.getDrivingEncoderValue();
-    double encoderCounter = 0;
-    if (Math.abs(encoderCounter) < 1000) {
-      driving.arcadeDrive(encoder, 0);   
-        encoderCounter += encoder;
-    } else{
-        new L4ElevatorShoot(this.elevator, this.shooter);
-      isFinished = true;
+    System.out.println(encoderCounter);
+    encoderCounter++;
+    if (encoderCounter < 10) {
+      shooter.setSpeed(-0.5);
+       
+    } else {
+      shooter.setSpeed(0);
+    }
+      if(encoderCounter > 10 && encoderCounter < 20){
+       elevator.setSpeed(-0.5);
+      //  new L4ElevatorShoot(elevator, shooter);
+  
     }
 }
 
