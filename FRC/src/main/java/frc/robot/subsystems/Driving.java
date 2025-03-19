@@ -11,11 +11,13 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SignalsConfig;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.config.BaseConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -28,7 +30,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPLTVController;
 
-
+import com.revrobotics.spark.SparkRelativeEncoder;
 
 
 public class Driving extends SubsystemBase {
@@ -59,7 +61,7 @@ public class Driving extends SubsystemBase {
   private final SparkMax rightFrontMotor = new SparkMax(OperatorConstants.driveMotor2ID, MotorType.kBrushless);
   private final SparkMax rightRearMotor = new SparkMax(OperatorConstants.driveMotor1ID, MotorType.kBrushless);
 
-
+  RelativeEncoder driveEncoder = leftFrontMotor.getEncoder();
 
   private final SysIdRoutine sysIdRoutine = new SysIdRoutine(new SysIdRoutine.Config(), new SysIdRoutine.Mechanism(voltage -> {
     leftFrontMotor.setVoltage(voltage);
@@ -178,4 +180,7 @@ AutoBuilder.configure(
     public Command sysIdDynamic(SysIdRoutine.Direction direction) {
       return sysIdRoutine.dynamic(direction);
     }
+    public double getDrivingEncoderValue(){
+      return driveEncoder.getPosition();
+  }
 }
