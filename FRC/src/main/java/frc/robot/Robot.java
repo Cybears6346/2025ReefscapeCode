@@ -44,6 +44,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+  
     }
 
     @Override
@@ -80,7 +81,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     // m_autonomousCommand = m_robotContainer.getAutonomousCommand(); FIXME: Fix when auton is finished
-    Command autoCommand = AutoBuilder.buildAuto("New Auto");
+    Command m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {

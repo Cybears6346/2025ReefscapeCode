@@ -63,6 +63,10 @@ public class RobotContainer {
   private final Driving arcadeDrive = new Driving();
   private final SequentialCommandGroup commandGroup = new SequentialCommandGroup();
 
+  private final Command doNothingAuto = new DoNothingAuto(arcadeDrive); 
+  private final Command straightL4Auto = new StraightL4Auto(arcadeDrive, shooter, elevator, commandGroup);  
+  //private final Command teamColorSideAuto = new TeamColorSideAuto(arcadeDrive, shooter, elevator, commandGroup);  
+  //private final Command enemyColorSideAuto = new EnemyColorSideAuto(arcadeDrive, shooter, elevator, commandGroup);
   SendableChooser<Command> chooser = new SendableChooser<>();
   
 
@@ -78,16 +82,12 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
 
-    // chooser.addOption("L4 pt.1.path",loadPathplanner("src/main/deploy/pathplanner/paths/L4 pt.1.path", true)); // change file path to match current pc it's running on
-    // chooser.addOption("L4 pt.2.path",loadPathplanner("src/main/deploy/pathplanner/paths/L4 pt.2.path", true));// change file path to match current pc it's running on
-    // chooser.addOption("L4 pt.3.path",loadPathplanner("src/main/deploy/pathplanner/paths/L4 pt.3.path", true));// change file path to match current pc it's running on
+    chooser.setDefaultOption("Do Nothing Auton", doNothingAuto); //use this for reference https://docs.wpilib.org/en/stable/docs/software/dashboards/smartdashboard/choosing-an-autonomous-program-from-smartdashboard.html
+    chooser.addOption("Straight L4 Auton", straightL4Auto);
+    //chooser.addOption("Team Color Side Auton", teamColorSideAuto);  
+    //chooser.addOption("Enemy Color Side Auton", enemyColorSideAuto);  
     
-    NamedCommands.registerCommand("L4ElevatorShoot", new L4ElevatorShoot(elevator, shooter));
-    NamedCommands.registerCommand("L4ElevatorDown", new L4ElevatorDown(elevator));
-    NamedCommands.registerCommand("Intake", new Intake(shooter));
-  
-
-    Shuffleboard.getTab("Autonomous").add(chooser);
+    SmartDashboard.putData(chooser);
   }
   
 //   public Command loadPathplanner(String filename, boolean resetOdomtry) {
@@ -202,6 +202,6 @@ public class RobotContainer {
    * TODO: ADD THIS FOR AUTONOMOUS
    */
   public Command getAutonomousCommand(){
-    return new PathPlannerAuto("New Auto");
+    return chooser.getSelected();
   }
 }
