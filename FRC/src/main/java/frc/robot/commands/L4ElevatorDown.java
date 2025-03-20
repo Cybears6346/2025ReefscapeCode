@@ -29,6 +29,10 @@ public class L4ElevatorDown extends Command{
   private double previousEncoderValue = 0.3;
   private int revolutionCounter = 4;
 
+  @Override
+  public void initialize() {
+    isFinished = false;
+  }
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {

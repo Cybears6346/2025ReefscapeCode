@@ -31,6 +31,11 @@ public class L4ElevatorShoot extends Command {
     private int revolutionCounter = 0;
 
   // Called every time the scheduler runs while the command is scheduled.
+
+  @Override
+  public void initialize() {
+    isFinished = false; 
+  }
   @Override
   public void execute() {
 

@@ -104,6 +104,7 @@ AutoBuilder.configure(
             this // Reference to this subsystem to set requirements
     );
 
+    
     driveEncoder.setPosition(0);
     config1
       .analogPositionAlwaysOn(true)
@@ -173,6 +174,10 @@ AutoBuilder.configure(
         differentialDrive.feed();
         // This method will be called once per scheduler run
     }  
+
+    public void zeroDriveEncoder(){
+      driveEncoder.setPosition(0);
+    }
 
     public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
       return sysIdRoutine.quasistatic(direction);

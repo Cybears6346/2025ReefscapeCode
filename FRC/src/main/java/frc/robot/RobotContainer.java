@@ -41,6 +41,8 @@ import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
 
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+
 
 
 
@@ -59,6 +61,7 @@ public class RobotContainer {
   private final Shooter shooter = new Shooter();
   private final Elevator elevator = new Elevator();
   private final Driving arcadeDrive = new Driving();
+  private final SequentialCommandGroup commandGroup = new SequentialCommandGroup();
 
   SendableChooser<Command> chooser = new SendableChooser<>();
   
@@ -157,12 +160,12 @@ public class RobotContainer {
        () -> -m_operatorController.getRightTriggerAxis()));
 
 //Elevator Macro Bindings for Auto/Teleop
-    m_operatorController.y().onTrue(new PathPlannerAuto("New Auto"));
-    m_operatorController.x().onTrue(new StraightL4Auto(arcadeDrive, shooter, elevator));
+    m_operatorController.y().onTrue(new L4ElevatorShoot(elevator, shooter));
+    m_operatorController.x().onTrue(new L3ElevatorShoot(elevator, shooter));
     m_operatorController.b().onTrue(new L2ElevatorShoot(elevator, shooter));
 
 //Use this as a elevator DOWN test
-    m_operatorController.a().onTrue(new Intake(shooter));
+    m_operatorController.a().onTrue(new StraightL4Auto(arcadeDrive, shooter, elevator, commandGroup));
 
     /*
      * Sys ID routines, to be uploaded to URCL by littleton robotics

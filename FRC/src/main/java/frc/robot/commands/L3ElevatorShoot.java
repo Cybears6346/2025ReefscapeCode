@@ -42,19 +42,19 @@ public class L3ElevatorShoot extends Command {
     previousEncoderValue = currentEncoderValue;
     double totalRevolutions = revolutionCounter + currentEncoderValue;
 
-    if (totalRevolutions > 0 && totalRevolutions < 2.1) {
+    if (totalRevolutions > 0 && totalRevolutions < 2.3) {
         elevator.setSpeed(-1);
     } else {
         elevator.setSpeed(-0.1);
     }
 
-    if (totalRevolutions > 2.05 && totalRevolutions < 2.3) {
+    if (totalRevolutions > 2.25 && totalRevolutions < 2.5) {
         shooter.setSpeed(-1);
     } else {
         shooter.setSpeed(0);
     }
 
-    if (totalRevolutions >= 2.3) {
+    if (totalRevolutions >= 2.5) {
         isFinished = true;
     }
 
