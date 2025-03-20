@@ -18,7 +18,7 @@ public class StraightL4Auto extends Command {
   private final Elevator elevator;
   private final SequentialCommandGroup commandGroup;
   
-  private final double targetEncoderValue = 22; // EDIT THIS TO CHANCE THE DISTANCE
+  private final double targetEncoderValue = 20; // EDIT THIS TO CHANCE THE DISTANCE (0.3 speed, 22; 0.5 speed, 20)
   private boolean isFinished = false;
 
   public StraightL4Auto(Driving driving, Shooter shooter, Elevator elevator, SequentialCommandGroup commandGroup) {
@@ -27,7 +27,8 @@ public class StraightL4Auto extends Command {
       this.elevator = elevator;
       this.commandGroup = new SequentialCommandGroup(
             new L4ElevatorShoot(elevator, shooter), //change to L4 In real test
-            new L4ElevatorDown(elevator)
+            new L4ElevatorDown(elevator) 
+            
         );
       addRequirements(driving, elevator, shooter);
   }
@@ -41,10 +42,11 @@ public class StraightL4Auto extends Command {
   public void execute() {
       double encoderValue = driving.getDrivingEncoderValue();
       if (encoderValue < targetEncoderValue) {
-          driving.arcadeDrive(0.3, 0); 
+          driving.arcadeDrive(0.5, 0); 
       } else {
           driving.arcadeDrive(0, 0); 
           this.commandGroup.schedule();
+          
    
          isFinished = true; 
       }
