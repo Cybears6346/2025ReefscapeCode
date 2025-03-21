@@ -92,7 +92,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    new PathPlannerAuto("New Auto");
+   // new PathPlannerAuto("New Auto");
   }
 
   @Override

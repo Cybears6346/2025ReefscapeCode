@@ -42,6 +42,7 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj.Timer;
 
 
 
@@ -160,8 +161,9 @@ public class RobotContainer {
        () -> -m_operatorController.getRightTriggerAxis()));
 
 //Elevator Macro Bindings for Auto/Teleop
+Timer timer = new Timer();
     m_operatorController.y().onTrue(new L4ElevatorShoot(elevator, shooter));
-    m_operatorController.x().onTrue(new L3ElevatorShoot(elevator, shooter));
+    m_driverController.x().onTrue(new TimedTurn(arcadeDrive, timer));
     m_operatorController.b().onTrue(new L2ElevatorShoot(elevator, shooter));
 
 //Use this as a elevator DOWN test
