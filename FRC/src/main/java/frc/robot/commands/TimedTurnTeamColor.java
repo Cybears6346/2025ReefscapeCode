@@ -9,14 +9,14 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.subsystems.Driving;
 import edu.wpi.first.wpilibj.Timer;
 
-public class TimedTurn extends Command {
+public class TimedTurnTeamColor extends Command {
   private final Driving driving;
 
   private final Timer timer = new Timer();
 
   private boolean isFinished = false;
 
-  public TimedTurn(Driving driving, Timer timer) {
+  public TimedTurnTeamColor(Driving driving, Timer timer) {
       this.driving = driving;
       
       addRequirements(driving);

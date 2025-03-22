@@ -62,12 +62,13 @@ public class RobotContainer {
   private final Shooter shooter = new Shooter();
   private final Elevator elevator = new Elevator();
   private final Driving arcadeDrive = new Driving();
+  Timer timer = new Timer();
   private final SequentialCommandGroup commandGroup = new SequentialCommandGroup();
 
   private final Command doNothingAuto = new DoNothingAuto(arcadeDrive); 
   private final Command straightL4Auto = new StraightL4Auto(arcadeDrive, shooter, elevator, commandGroup);  
   //private final Command teamColorSideAuto = new TeamColorSideAuto(arcadeDrive, shooter, elevator, commandGroup);  
-  //private final Command enemyColorSideAuto = new EnemyColorSideAuto(arcadeDrive, shooter, elevator, commandGroup);
+  private final Command enemyColorSideAuto = new EnemyColorSideAuto(arcadeDrive, shooter, elevator, commandGroup, timer);
   SendableChooser<Command> chooser = new SendableChooser<>();
   
 
@@ -86,7 +87,7 @@ public class RobotContainer {
     chooser.setDefaultOption("Do Nothing Auton", doNothingAuto); //use this for reference https://docs.wpilib.org/en/stable/docs/software/dashboards/smartdashboard/choosing-an-autonomous-program-from-smartdashboard.html
     chooser.addOption("Straight L4 Auton", straightL4Auto);
     //chooser.addOption("Team Color Side Auton", teamColorSideAuto);  
-    //chooser.addOption("Enemy Color Side Auton", enemyColorSideAuto);  
+    chooser.addOption("Enemy Color Side Auton", enemyColorSideAuto);  
     
     SmartDashboard.putData(chooser);
   }
@@ -161,7 +162,7 @@ public class RobotContainer {
        () -> -m_operatorController.getRightTriggerAxis()));
 
 //Elevator Macro Bindings for Auto/Teleop
-Timer timer = new Timer();
+
     m_operatorController.y().onTrue(new L4ElevatorShoot(elevator, shooter));
     m_operatorController.x().onTrue(new L3ElevatorShoot(elevator, shooter));
     m_operatorController.b().onTrue(new L2ElevatorShoot(elevator, shooter));
