@@ -163,11 +163,11 @@ public class RobotContainer {
 //Elevator Macro Bindings for Auto/Teleop
 Timer timer = new Timer();
     m_operatorController.y().onTrue(new L4ElevatorShoot(elevator, shooter));
-    m_driverController.x().onTrue(new TimedTurn(arcadeDrive, timer));
+    m_operatorController.x().onTrue(new L3ElevatorShoot(elevator, shooter));
     m_operatorController.b().onTrue(new L2ElevatorShoot(elevator, shooter));
 
 //Use this as a elevator DOWN test
-    m_operatorController.a().onTrue(new StraightL4Auto(arcadeDrive, shooter, elevator, commandGroup));
+    m_operatorController.a().onTrue(new L4ElevatorDown(elevator));
 
     /*
      * Sys ID routines, to be uploaded to URCL by littleton robotics
