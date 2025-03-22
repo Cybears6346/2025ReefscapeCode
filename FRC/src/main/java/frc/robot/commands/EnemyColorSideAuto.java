@@ -20,7 +20,8 @@ public class EnemyColorSideAuto extends Command {
   private final SequentialCommandGroup commandGroup;
   private final Timer timer;
   
-  private final double targetEncoderValue = 26; // EDIT THIS TO CHANCE THE DISTANCE (0.3 speed, 22; 0.5 speed, 20)
+  private final double targetEncoderValue = 29 
+  ; // EDIT THIS TO CHANCE THE DISTANCE (0.3 speed, 22; 0.5 speed, 20)
   private boolean isFinished = false;
 
   public EnemyColorSideAuto(Driving driving, Shooter shooter, Elevator elevator, SequentialCommandGroup commandGroup, Timer timer) {
@@ -41,6 +42,7 @@ public class EnemyColorSideAuto extends Command {
 
   @Override
   public void initialize() {
+    driving.zeroDriveEncoder();
       isFinished = false; 
   }
 

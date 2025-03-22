@@ -12,43 +12,31 @@ import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-public class TeamColorSideAuto extends Command {
+public class CenterAutonUTurnpt1 extends Command {
   private final Driving driving;
-  private final Shooter shooter;
-  private final Elevator elevator;
-  private final SequentialCommandGroup commandGroup;
   
-  private final double targetEncoderValue = 20; // EDIT THIS TO CHANCE THE DISTANCE (0.3 speed, 22; 0.5 speed, 20)
+  private final double targetEncoderValue = -62; // EDIT THIS TO CHANCE THE DISTANCE (0.3 speed, 22; 0.5 speed, 20)
   private boolean isFinished = false;
 
-  public TeamColorSideAuto(Driving driving, Shooter shooter, Elevator elevator, SequentialCommandGroup commandGroup) {
+  public CenterAutonUTurnpt1(Driving driving) {
       this.driving = driving;
-      this.shooter = shooter;
-      this.elevator = elevator;
-      this.commandGroup = new SequentialCommandGroup(
-            new L4ElevatorShoot(elevator, shooter), //change to L4 In real test
-            new L4ElevatorDown(elevator) 
-            
-        );
-      addRequirements(driving, elevator, shooter);
+      addRequirements(driving);
   }
 
   @Override
   public void initialize() {
-    driving.zeroDriveEncoder();
+        driving.zeroDriveEncoder();
       isFinished = false; 
   }
 
   @Override
   public void execute() {
       double encoderValue = driving.getDrivingEncoderValue();
-      if (encoderValue < targetEncoderValue) {
-          driving.arcadeDrive(0.5, 0); 
+      if (encoderValue > targetEncoderValue) {
+          driving.arcadeDrive(-0.5, 0); 
+          //System.out.println("Encoder Value: " + encoderValue);
       } else {
-          driving.arcadeDrive(0, 0); 
-          this.commandGroup.schedule();
-          
-   
+          driving.arcadeDrive(0, 0);
          isFinished = true; 
       }
   }

@@ -1,6 +1,6 @@
-// // Copyright (c) FIRST and other WPILib contributors.
-// // Open Source Software; you can modify and/or share it under the terms of
-// // the WPILib BSD license file in the root directory of this project.
+// Copyright (c) FIRST and other WPILib contributors.
+// // // Open Source Software; you can modify and/or share it under the terms of
+// // // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
 
@@ -16,6 +16,7 @@ public class StraightL4Auto extends Command {
   private final Driving driving;
   private final Shooter shooter;
   private final Elevator elevator;
+
   private final SequentialCommandGroup commandGroup;
   
   private final double targetEncoderValue = 20; // EDIT THIS TO CHANCE THE DISTANCE (0.3 speed, 22; 0.5 speed, 20)
@@ -27,14 +28,14 @@ public class StraightL4Auto extends Command {
       this.elevator = elevator;
       this.commandGroup = new SequentialCommandGroup(
             new L4ElevatorShoot(elevator, shooter), //change to L4 In real test
-            new L4ElevatorDown(elevator) 
-            
+            new L4ElevatorDown(elevator)
         );
       addRequirements(driving, elevator, shooter);
   }
 
   @Override
   public void initialize() {
+    driving.zeroDriveEncoder();
       isFinished = false; 
   }
 
@@ -46,9 +47,7 @@ public class StraightL4Auto extends Command {
       } else {
           driving.arcadeDrive(0, 0); 
           this.commandGroup.schedule();
-          
-   
-         isFinished = true; 
+          isFinished = true; 
       }
   }
 
@@ -60,7 +59,7 @@ public class StraightL4Auto extends Command {
   @Override
   public void end(boolean interrupted) {
         
-      driving.arcadeDrive(0, 0); 
+     driving.arcadeDrive(0, 0); 
       driving.zeroDriveEncoder();
   }
 }

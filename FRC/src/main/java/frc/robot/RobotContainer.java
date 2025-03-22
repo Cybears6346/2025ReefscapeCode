@@ -42,7 +42,7 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Timer;;
 
 
 
@@ -67,8 +67,10 @@ public class RobotContainer {
 
   private final Command doNothingAuto = new DoNothingAuto(arcadeDrive); 
   private final Command straightL4Auto = new StraightL4Auto(arcadeDrive, shooter, elevator, commandGroup);  
+  private final Command straigthL4AutoWithUturn = new StraightL4AutoWithUturn(arcadeDrive, shooter, elevator, commandGroup, timer);
   //private final Command teamColorSideAuto = new TeamColorSideAuto(arcadeDrive, shooter, elevator, commandGroup);  
   private final Command enemyColorSideAuto = new EnemyColorSideAuto(arcadeDrive, shooter, elevator, commandGroup, timer);
+  private final Command StraightAutoCommand = new StraightAutoCommand(arcadeDrive);
   SendableChooser<Command> chooser = new SendableChooser<>();
   
 
@@ -85,9 +87,11 @@ public class RobotContainer {
     configureBindings();
 
     chooser.setDefaultOption("Do Nothing Auton", doNothingAuto); //use this for reference https://docs.wpilib.org/en/stable/docs/software/dashboards/smartdashboard/choosing-an-autonomous-program-from-smartdashboard.html
-    chooser.addOption("Straight L4 Auton", straightL4Auto);
+    chooser.addOption("Straight/Center Auton", straightL4Auto);
+    chooser.addOption("Straight/Center Auton with Uturn", straigthL4AutoWithUturn);
     //chooser.addOption("Team Color Side Auton", teamColorSideAuto);  
-    chooser.addOption("Enemy Color Side Auton", enemyColorSideAuto);  
+    chooser.addOption("Processor Auton", enemyColorSideAuto);  
+    chooser.addOption("Leave 1 foot", StraightAutoCommand);
     
     SmartDashboard.putData(chooser);
   }
@@ -161,17 +165,20 @@ public class RobotContainer {
        .whileTrue(new ShooterSetSpeed(shooter, 
        () -> -m_operatorController.getRightTriggerAxis()));
 
-//Elevator Macro Bindings for Auto/Teleop
-
+//Elevator Macro Bindings for Auto/Teleop, 
+// DO NOT CHANGE ANY OF THESE MACROS, THESE WILL BE USED DURING COMP
     m_operatorController.y().onTrue(new L4ElevatorShoot(elevator, shooter));
     m_operatorController.x().onTrue(new L3ElevatorShoot(elevator, shooter));
     m_operatorController.b().onTrue(new L2ElevatorShoot(elevator, shooter));
-
-//Use this as a elevator DOWN test
     m_operatorController.a().onTrue(new L4ElevatorDown(elevator));
+//Use this as a general test, comment out during comp
+    m_driverController.a().onTrue(new CenterAutonUTurnpt1(arcadeDrive));
+    m_driverController.x().onTrue(new StraightL4Auto(arcadeDrive, shooter, elevator, commandGroup)); 
+    m_driverController.b().onTrue(new CenterAutonUTurnShortPath(arcadeDrive));
+    m_driverController.y().onTrue(new StraightL4AutoWithUturn(arcadeDrive, shooter, elevator, commandGroup, timer));
 
     /*
-     * Sys ID routines, to be uploaded to URCL by littleton robotics
+     * Sys ID routines, to be uploaded to URCL by littleton roboics
      * Driver controller must hold those button combinations to administer the routine
      * Please do this in an open area
      * There are four tests total, read the URCL docs for info on how to access the data. 
