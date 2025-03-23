@@ -35,7 +35,7 @@ public class CenterAutonUturnTurn extends Command {
   }
 
   @Override  public boolean isFinished() {
-      return timer.hasElapsed(2);
+      return timer.hasElapsed(2.35);
   }
 
   @Override

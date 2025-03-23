@@ -172,10 +172,10 @@ public class RobotContainer {
     m_operatorController.b().onTrue(new L2ElevatorShoot(elevator, shooter));
     m_operatorController.a().onTrue(new L4ElevatorDown(elevator));
 //Use this as a general test, comment out during comp
-    m_driverController.a().onTrue(new CenterAutonUTurnpt1(arcadeDrive));
-    m_driverController.x().onTrue(new StraightL4Auto(arcadeDrive, shooter, elevator, commandGroup)); 
-    m_driverController.b().onTrue(new CenterAutonUTurnShortPath(arcadeDrive));
-    m_driverController.y().onTrue(new StraightL4AutoWithUturn(arcadeDrive, shooter, elevator, commandGroup, timer));
+    m_driverController.a().onTrue(new CenterAutonUturnTurn(arcadeDrive, timer));
+   // m_driverController.x().onTrue(new StraightL4Auto(arcadeDrive, shooter, elevator, commandGroup)); 
+    //m_driverController.b().onTrue(new CenterAutonUTurnShortPath(arcadeDrive));
+    //m_driverController.y().onTrue(new StraightL4AutoWithUturn(arcadeDrive, shooter, elevator, commandGroup, timer));
 
     /*
      * Sys ID routines, to be uploaded to URCL by littleton roboics
