@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 public class StraightAutoCommand extends Command {
   private final Driving driving;
   
-  private final double targetEncoderValue = 6; // EDIT THIS TO CHANCE THE DISTANCE (0.3 speed, 22; 0.5 speed, 20)
+  private final double targetEncoderValue = 5.5; // EDIT THIS TO CHANCE THE DISTANCE (0.3 speed, 22; 0.5 speed, 20)
   private boolean isFinished = false;
 
   public StraightAutoCommand(Driving driving) {

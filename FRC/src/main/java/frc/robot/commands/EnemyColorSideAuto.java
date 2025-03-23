@@ -20,7 +20,7 @@ public class EnemyColorSideAuto extends Command {
   private final SequentialCommandGroup commandGroup;
   private final Timer timer;
   
-  private final double targetEncoderValue = 29 
+  private final double targetEncoderValue = 31 //30
   ; // EDIT THIS TO CHANCE THE DISTANCE (0.3 speed, 22; 0.5 speed, 20)
   private boolean isFinished = false;
 
@@ -34,6 +34,7 @@ public class EnemyColorSideAuto extends Command {
             new TimedTurnEnemyColor(driving, timer),
             new StraightAutoCommand(driving),
             new L4ElevatorShoot(elevator, shooter), //change to L4 In real test
+            new AutonL4Delay(timer, shooter),
             new L4ElevatorDown(elevator) 
             
         );

@@ -66,11 +66,11 @@ public class RobotContainer {
   private final SequentialCommandGroup commandGroup = new SequentialCommandGroup();
 
   private final Command doNothingAuto = new DoNothingAuto(arcadeDrive); 
-  private final Command straightL4Auto = new StraightL4Auto(arcadeDrive, shooter, elevator, commandGroup);  
+  private final Command straightL4Auto = new StraightL4Auto(arcadeDrive, shooter, elevator, commandGroup, timer);  
   private final Command straigthL4AutoWithUturn = new StraightL4AutoWithUturn(arcadeDrive, shooter, elevator, commandGroup, timer);
-  //private final Command teamColorSideAuto = new TeamColorSideAuto(arcadeDrive, shooter, elevator, commandGroup);  
+  private final Command teamColorSideAuto = new TeamColorSideAuto(arcadeDrive, shooter, elevator, commandGroup,timer);  
   private final Command enemyColorSideAuto = new EnemyColorSideAuto(arcadeDrive, shooter, elevator, commandGroup, timer);
-  private final Command StraightAutoCommand = new StraightAutoCommand(arcadeDrive);
+  private final Command StraightAutoCommand = new StraightAutoCommand(arcadeDrive); // Leave auton
   SendableChooser<Command> chooser = new SendableChooser<>();
   
 
@@ -89,7 +89,7 @@ public class RobotContainer {
     chooser.setDefaultOption("Do Nothing Auton", doNothingAuto); //use this for reference https://docs.wpilib.org/en/stable/docs/software/dashboards/smartdashboard/choosing-an-autonomous-program-from-smartdashboard.html
     chooser.addOption("Straight/Center Auton", straightL4Auto);
     chooser.addOption("Straight/Center Auton with Uturn", straigthL4AutoWithUturn);
-    //chooser.addOption("Team Color Side Auton", teamColorSideAuto);  
+    chooser.addOption("Non Processor Auton", teamColorSideAuto);  
     chooser.addOption("Processor Auton", enemyColorSideAuto);  
     chooser.addOption("Leave 1 foot", StraightAutoCommand);
     
@@ -172,10 +172,10 @@ public class RobotContainer {
     m_operatorController.b().onTrue(new L2ElevatorShoot(elevator, shooter));
     m_operatorController.a().onTrue(new L4ElevatorDown(elevator));
 //Use this as a general test, comment out during comp
-    m_driverController.a().onTrue(new CenterAutonUturnTurn(arcadeDrive, timer));
-   // m_driverController.x().onTrue(new StraightL4Auto(arcadeDrive, shooter, elevator, commandGroup)); 
-    //m_driverController.b().onTrue(new CenterAutonUTurnShortPath(arcadeDrive));
-    //m_driverController.y().onTrue(new StraightL4AutoWithUturn(arcadeDrive, shooter, elevator, commandGroup, timer));
+  //   m_driverController.a().onTrue(new TimedTurnEnemyColor(arcadeDrive, timer));
+  //  m_driverController.x().onTrue(new TeamColorSideAuto(arcadeDrive, shooter, elevator, commandGroup, timer)); 
+  //   //m_driverController.b().onTrue(new CenterAutonUTurnShortPath(arcadeDrive));
+  //   //m_driverController.y().onTrue(new StraightL4AutoWithUturn(arcadeDrive, shooter, elevator, commandGroup, timer));
 
     /*
      * Sys ID routines, to be uploaded to URCL by littleton roboics

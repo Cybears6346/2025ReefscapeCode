@@ -31,11 +31,11 @@ public class TimedTurnTeamColor extends Command {
 
   @Override
   public void execute() {
-    driving.arcadeDrive(0, 0.3); 
+    driving.arcadeDrive(0, 0.3);  
   }
 
   @Override  public boolean isFinished() {
-      return timer.hasElapsed(0.8);
+      return timer.hasElapsed(1.6);
   }
 
   @Override

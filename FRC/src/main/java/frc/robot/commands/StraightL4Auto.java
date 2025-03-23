@@ -11,23 +11,27 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj.Timer;
 
 public class StraightL4Auto extends Command {
   private final Driving driving;
   private final Shooter shooter;
   private final Elevator elevator;
+  private final Timer timer;
 
   private final SequentialCommandGroup commandGroup;
   
   private final double targetEncoderValue = 20; // EDIT THIS TO CHANCE THE DISTANCE (0.3 speed, 22; 0.5 speed, 20)
   private boolean isFinished = false;
 
-  public StraightL4Auto(Driving driving, Shooter shooter, Elevator elevator, SequentialCommandGroup commandGroup) {
+  public StraightL4Auto(Driving driving, Shooter shooter, Elevator elevator, SequentialCommandGroup commandGroup, Timer timer) {
       this.driving = driving;
       this.shooter = shooter;
       this.elevator = elevator;
+      this.timer = timer;
       this.commandGroup = new SequentialCommandGroup(
             new L4ElevatorShoot(elevator, shooter), //change to L4 In real test
+            new AutonL4Delay(timer, shooter),
             new L4ElevatorDown(elevator)
         );
       addRequirements(driving, elevator, shooter);

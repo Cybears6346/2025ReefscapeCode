@@ -91,6 +91,7 @@ public class StraightL4AutoWithUturn extends Command {
       this.timer = timer;
       this.commandGroup = new SequentialCommandGroup(
             new L4ElevatorShoot(elevator, shooter), //change to L4 In real test
+            new AutonL4Delay(timer, shooter),
             new L4ElevatorDown(elevator),
             new CenterAutonUTurnShortPath(driving),
             new CenterAutonUturnTurn(driving, timer),
