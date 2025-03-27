@@ -44,9 +44,10 @@ public class L2ElevatorShoot extends Command {
 
     if (totalRevolutions > 0 && totalRevolutions < 0.9) {
         elevator.setSpeed(-1);
-    } else {
-        elevator.setSpeed(-0.1);
-    }
+    } 
+    // else {
+    //     //elevator.setSpeed(-0.1);
+    // }
 //temp
     // if (totalRevolutions > 1 && totalRevolutions < 1.2) {
     //     shooter.setSpeed(-1);
@@ -54,7 +55,7 @@ public class L2ElevatorShoot extends Command {
     //     shooter.setSpeed(0);
     // }
 
-    if (totalRevolutions >= 1.2) {
+    if (totalRevolutions >= 0.9) {
         isFinished = true;
     }
 
