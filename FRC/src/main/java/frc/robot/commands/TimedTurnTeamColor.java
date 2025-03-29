@@ -31,11 +31,11 @@ public class TimedTurnTeamColor extends Command {
 
   @Override
   public void execute() {
-    driving.arcadeDrive(0, 0.3);  
+    driving.arcadeDrive(0, 0.6);  //OG VALUE 0.3
   }
 
   @Override  public boolean isFinished() {
-      return timer.hasElapsed(1.6);
+      return timer.hasElapsed(0.4);  //OG VALUE 1.6 Inverse Sqaure law, divided by 4
   }
 
   @Override

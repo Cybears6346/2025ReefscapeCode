@@ -172,10 +172,10 @@ public class RobotContainer {
     m_operatorController.b().onTrue(new L2ElevatorShoot(elevator, shooter));
     m_operatorController.a().onTrue(new L4ElevatorDown(elevator));
 //Use this as a general test, comment out during comp
-  //   m_driverController.a().onTrue(new TimedTurnEnemyColor(arcadeDrive, timer));
-  //  m_driverController.x().onTrue(new TeamColorSideAuto(arcadeDrive, shooter, elevator, commandGroup, timer)); 
-  //   //m_driverController.b().onTrue(new CenterAutonUTurnShortPath(arcadeDrive));
-  //   //m_driverController.y().onTrue(new StraightL4AutoWithUturn(arcadeDrive, shooter, elevator, commandGroup, timer));
+  // m_driverController.a().onTrue(new TimedTurnEnemyColor(arcadeDrive, timer));
+  // m_driverController.x().onTrue(new CenterAutonUturnTurn(arcadeDrive, timer)); 
+  // m_driverController.b().onTrue(new EnemyColorSideAuto(arcadeDrive, shooter, elevator, commandGroup, timer));
+  // m_driverController.y().onTrue(new StraightL4Auto(arcadeDrive, shooter, elevator, commandGroup, timer));
 
     /*
      * Sys ID routines, to be uploaded to URCL by littleton roboics
@@ -184,25 +184,25 @@ public class RobotContainer {
      * There are four tests total, read the URCL docs for info on how to access the data. 
      * Keep these tests here as they will differ from robot to robot year to year
      */
-    m_driverController
-      .a()
-      .and(m_driverController.rightBumper())
-      .whileTrue(arcadeDrive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+    // m_driverController
+    //   .a()
+    //   .and(m_driverController.rightBumper())
+    //   .whileTrue(arcadeDrive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
 
-    m_driverController
-      .b()
-      .and(m_driverController.rightBumper())
-      .whileTrue(arcadeDrive.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+    // m_driverController
+    //   .b()
+    //   .and(m_driverController.rightBumper())
+    //   .whileTrue(arcadeDrive.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
 
-    m_driverController
-      .x()
-      .and(m_driverController.rightBumper())
-      .whileTrue(arcadeDrive.sysIdDynamic(SysIdRoutine.Direction.kForward));
+    // m_driverController
+    //   .x()
+    //   .and(m_driverController.rightBumper())
+    //   .whileTrue(arcadeDrive.sysIdDynamic(SysIdRoutine.Direction.kForward));
 
-    m_driverController
-      .y()
-      .and(m_driverController.rightBumper())
-      .whileTrue(arcadeDrive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+    // m_driverController
+    //   .y()
+    //   .and(m_driverController.rightBumper())
+    //   .whileTrue(arcadeDrive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
   }
 
   /**

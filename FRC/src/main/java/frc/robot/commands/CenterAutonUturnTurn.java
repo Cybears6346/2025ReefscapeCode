@@ -31,11 +31,11 @@ public class CenterAutonUturnTurn extends Command {
 
   @Override
   public void execute() {
-    driving.arcadeDrive(0, 0.3); 
+    driving.arcadeDrive(0, 0.6); // OG VALUE 0.3
   }
 
   @Override  public boolean isFinished() {
-      return timer.hasElapsed(2.35);
+      return timer.hasElapsed(0.5875);//OG TIME 2.35 SECONDS  Inverse Sqaure law, divided by 4
   }
 
   @Override

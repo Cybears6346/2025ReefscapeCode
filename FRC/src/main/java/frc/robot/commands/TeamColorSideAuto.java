@@ -31,11 +31,14 @@ public class TeamColorSideAuto extends Command {
       this.timer = timer;
     
       this.commandGroup  = new SequentialCommandGroup(
+            new Delay(timer),
             new TimedTurnTeamColor(driving, timer),
+            new Delay(timer), 
             new StraightAutoCommand(driving),
             new L4ElevatorShoot(elevator, shooter), //change to L4 In real test
             new AutonL4Delay(timer, shooter),
             new L4ElevatorDown(elevator) 
+            
             
         );
       addRequirements(driving, elevator, shooter);

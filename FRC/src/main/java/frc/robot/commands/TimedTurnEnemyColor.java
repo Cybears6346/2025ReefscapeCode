@@ -31,11 +31,11 @@ public class TimedTurnEnemyColor extends Command {
 
   @Override
   public void execute() {
-    driving.arcadeDrive(0, -0.3);  // For testing purposes make positive for Nonprocessor side, otherwise always negative
+    driving.arcadeDrive(0, -0.6);  // OG SPEED WAS -0.3
   }
 
   @Override  public boolean isFinished() {
-      return timer.hasElapsed(1.6);
+      return timer.hasElapsed(0.4); //OG TIME WAS 1.6 SECONDS Inverse Sqaure law, divided by 4
   }
 
   @Override
