@@ -19,6 +19,7 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -29,8 +30,10 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.OperatorConstants;
 
+import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPLTVController;
@@ -61,6 +64,8 @@ public class Driving extends SubsystemBase {
   // public void resetPose(Pose2d pose) {
   //   // Reset the robot's pose to the given pose
   // }
+
+  private Pigeon2 pigeon = new Pigeon2(0,"rio");
 
   private DifferentialDrivePoseEstimator m_poseEstimator = new DifferentialDrivePoseEstimator(new DifferentialDriveKinematics(Units.inchesToMeters(26)), new Rotation2d(), 0, 0, new Pose2d());
 
@@ -182,7 +187,7 @@ public class Driving extends SubsystemBase {
     public void periodic() {
         differentialDrive.feed();
         // This method will be called once per scheduler run
-        m_poseEstimator.update(new Rotation2d(), driveEncoder.getPosition(), rightFrontMotor.getEncoder().getPosition());
+        m_poseEstimator.update(pigeon.getRotation2d(), driveEncoder.getPosition(), rightFrontMotor.getEncoder().getPosition());
     }  
 
     public void zeroDriveEncoder(){
@@ -203,4 +208,12 @@ public class Driving extends SubsystemBase {
     public void updateLimelight(Pose2d pose, double timestamp){
       m_poseEstimator.addVisionMeasurement(pose, timestamp);
     }
+
+    public void alignToTag(){
+      PIDController rotationPID = new PIDController(0.09, 0, 0);
+      double output = rotationPID.calculate(m_poseEstimator.getEstimatedPosition().getRotation().getRadians(), 0);
+      differentialDrive.arcadeDrive(0, -output);
+
+    }
+
 }

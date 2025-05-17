@@ -12,6 +12,7 @@ import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -42,7 +43,7 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj.Timer;;
+import edu.wpi.first.wpilibj.Timer;
 
 
 
@@ -149,6 +150,7 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    m_driverController.b().whileTrue(new RunCommand(arcadeDrive::alignToTag, arcadeDrive)).whileFalse(new ArcadeDrive(arcadeDrive, 0, 0));
     m_operatorController.leftBumper().whileTrue(new AlgaeWheelSetSpeed(algaeWheel, 1));
     m_operatorController.rightBumper().whileTrue(new AlgaeWheelSetSpeed(algaeWheel, -1));
     
@@ -171,6 +173,9 @@ public class RobotContainer {
     m_operatorController.x().onTrue(new L3ElevatorShoot(elevator, shooter));
     m_operatorController.b().onTrue(new L2ElevatorShoot(elevator, shooter));
     m_operatorController.a().onTrue(new L4ElevatorDown(elevator));
+
+
+
 //Use this as a general test, comment out during comp
   // m_driverController.a().onTrue(new TimedTurnEnemyColor(arcadeDrive, timer));
   // m_driverController.x().onTrue(new CenterAutonUturnTurn(arcadeDrive, timer)); 
