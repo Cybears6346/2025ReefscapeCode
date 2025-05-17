@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import java.security.Timestamp;
 import java.util.function.DoubleSupplier;
 
 import com.revrobotics.spark.SparkBase.PersistMode;
@@ -18,8 +19,12 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -56,12 +61,16 @@ public class Driving extends SubsystemBase {
   // public void resetPose(Pose2d pose) {
   //   // Reset the robot's pose to the given pose
   // }
+
+  private DifferentialDrivePoseEstimator m_poseEstimator = new DifferentialDrivePoseEstimator(new DifferentialDriveKinematics(Units.inchesToMeters(26)), new Rotation2d(), 0, 0, new Pose2d());
+
   private final SparkMax leftFrontMotor = new SparkMax(OperatorConstants.driveMotor4ID, MotorType.kBrushless);
   private final SparkMax leftRearMotor = new SparkMax(OperatorConstants.driveMotor3ID, MotorType.kBrushless);
   private final SparkMax rightFrontMotor = new SparkMax(OperatorConstants.driveMotor2ID, MotorType.kBrushless);
   private final SparkMax rightRearMotor = new SparkMax(OperatorConstants.driveMotor1ID, MotorType.kBrushless);
 
   RelativeEncoder driveEncoder = leftFrontMotor.getEncoder();
+  RelativeEncoder RightEncoder = rightFrontMotor.getEncoder();
   
 
   private final SysIdRoutine sysIdRoutine = new SysIdRoutine(new SysIdRoutine.Config(), new SysIdRoutine.Mechanism(voltage -> {
@@ -173,6 +182,7 @@ public class Driving extends SubsystemBase {
     public void periodic() {
         differentialDrive.feed();
         // This method will be called once per scheduler run
+        m_poseEstimator.update(new Rotation2d(), driveEncoder.getPosition(), rightFrontMotor.getEncoder().getPosition());
     }  
 
     public void zeroDriveEncoder(){
@@ -189,4 +199,8 @@ public class Driving extends SubsystemBase {
     public double getDrivingEncoderValue(){
       return driveEncoder.getPosition();
   }
+
+    public void updateLimelight(Pose2d pose, double timestamp){
+      m_poseEstimator.addVisionMeasurement(pose, timestamp);
+    }
 }
